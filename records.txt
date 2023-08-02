@@ -1,0 +1,10 @@
+alex => 87
+arun => 59
+rakesh => 92
+suresh => 99
+brijesh => 67
+
+ali => 59
+ansh => 64
+anmol => 70
+
