@@ -22,10 +22,11 @@ options = FaceDetectorOptions(
     running_mode=VisionRunningMode.LIVE_STREAM,
     result_callback=print_result)
 
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 with FaceDetector.create_from_options(options) as detector:
     while True:
         status, img = cam.read()
+        ih, iw, _ = img.shape # image height, image width
         if not status:
             print('Camera is not available')
             break
@@ -38,12 +39,18 @@ with FaceDetector.create_from_options(options) as detector:
             result = results.pop()
             if result.detections:
                 for detection in result.detections:
-                    print(detection.bounding_box)
+                    # print(detection.keypoints)
                     x = detection.bounding_box.origin_x
                     y = detection.bounding_box.origin_y
                     w = detection.bounding_box.width
                     h = detection.bounding_box.height
-                    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                    cv2.rectangle(img, (x-20, y-20), (x+w+20, y+h+20), (0, 255, 0), 2)
+                    for keypoints in detection.keypoints: # extract all keypoints   
+                        nx = keypoints.x
+                        ny = keypoints.y
+                        x = int(nx * iw) # convert normalized value to pixel value
+                        y = int(ny * ih) # convert normalized value to pixel value
+                        cv2.circle(img, (x, y), 2, (0, 0, 255), 2) # draw circle
         # teen panch yaha pe khatm
         cv2.imshow('Webcam', img)
         if cv2.waitKey(1) == 27: # ESC KEY
