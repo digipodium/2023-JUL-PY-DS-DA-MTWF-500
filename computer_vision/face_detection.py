@@ -15,7 +15,6 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 results = []
 
 def print_result(result: FaceDetectorResult, output_image: mp.Image, timestamp_ms: int):
-    # print('face detector result: {}'.format(result))
     results.append(result)
 
 options = FaceDetectorOptions(
@@ -37,7 +36,6 @@ with FaceDetector.create_from_options(options) as detector:
 
         if results:
             result = results.pop()
-            print(result)
             if result.detections:
                 for detection in result.detections:
                     print(detection.bounding_box)
