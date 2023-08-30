@@ -22,8 +22,6 @@ while True:
     fg = cv2.bitwise_and(img2, img2, mask=mask)
     cv2.imshow("mask", mask)
     cv2.imshow("fg", fg)
-
-
     key = cv2.waitKey(1)
     if key == ord('q'):
         break
